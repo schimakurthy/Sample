@@ -1,0 +1,175 @@
+<header-app></header-app>
+<div class="holder">
+    <div class="container">
+        <div class="login-padding">
+        <div class="row promo" style="width:600px;">
+            <div class="col-xs-12 cta-container">
+                <div class="row border padding-bottom-10">
+                        <div class="text-center">
+                            <h2>REGISTER</h2>
+                        </div>
+                    </div>
+                    <form (ngSubmit)="onSubmit()" #registerForm="ngForm" novalidate class="padding-top-10">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6">
+                                <div class="form-group" [ngClass]="{'has-error':registerForm.submitted && !firstName.valid}">
+                                    <label class="control-label">First Name*</label>
+                                    <div class="input-group">
+                                        <input type="text" #firstName="ngModel" name="firstName" [(ngModel)]="model.firstName" class="form-control" required>
+                                    </div>
+                                    <div [hidden]="firstName.valid || firstName.pristine" class="text-danger">
+                                        First Name is required.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-6 col-sm-6">
+                                <div class="form-group" [ngClass]="{'has-error':registerForm.submitted && !lastName.valid}">
+                                    <label class="control-label">Last Name*</label>
+                                    <div class="input-group">
+                                        <input type="text" #lastName="ngModel" name="lastName" [(ngModel)]="model.lastName" class="form-control" required>
+                                    </div>
+                                    <div [hidden]="lastName.valid || lastName.pristine" class="text-danger">
+                                        Last Name is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6">
+                                <div class="form-group" [ngClass]="{'has-error':registerForm.submitted && !phone.valid}">
+                                    <label class="control-label">Phone No.*</label>
+                                    <div class="input-group">
+                                        <input type="text" #phone="ngModel" name="phone" [(ngModel)]="model.phone" class="form-control" pattern="^[0-9]{3}[ ]([0-9]{3})[-]([0-9]{4})$"
+                                            required placeholder="999 999-9999" minlength="10" maxlength="12" (blur)="formatPhone(phone.value)">
+                                    </div>
+                                    <div *ngIf="phone.errors">
+                                        <span [hidden]="!phone.errors.pattern || phone.pristine" class="text-danger" *ngIf="phone.value.length > 10 || phone.value.length < 10">Phone No. format must be 999 999-9999.</span>
+                                        <span [hidden]="!phone.errors.required || phone.pristine" class="text-danger">Phone No. is required.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6">
+                                <div class="form-group" [ngClass]="{'has-error':registerForm.submitted && !email.valid}">
+                                    <label class="control-label">Email Address*</label>
+                                    <div class="input-group">
+                                        <input type="text" #email="ngModel" name="email" [(ngModel)]="model.emailAddress" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                                            class="form-control" required>
+                                    </div>
+                                    <div *ngIf="email.errors">
+                                        <span [hidden]="!email.errors.pattern || email.pristine" class="text-danger">Email Address is invalid.</span>
+                                        <span [hidden]="!email.errors.required || email.pristine" class="text-danger">Email Address is required.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label"> Address Line 1</label>
+                                    <div class="width-90">
+                                        <input type="text" #address1="ngModel" name="address1" [(ngModel)]="model.address1" class="form-control" id="address1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label"> Address Line 2</label>
+                                    <div class="width-90">
+                                        <input type="text" #address2="ngModel" name="address2" [(ngModel)]="model.address2" class="form-control" id="address2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row padding-top-10">
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="form-group" [ngClass]="{'has-error': registerForm.submitted && !city.valid}">
+                                    <label class="control-label" for="city">City*</label>
+                                    <div class="input-group">
+                                        <input type="text" #city="ngModel" [(ngModel)]="model.city" name="city" class="form-control" required/>
+                                    </div>
+                                    <div [hidden]="city.valid || city.pristine" class="text-danger">
+                                        City is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="form-group" [ngClass]="{'has-error': registerForm.submitted && !state.valid}">
+                                    <label class="control-label" for="state">State*</label>
+                                    <div class="input-group">
+                                        <input type="text" #state="ngModel" [(ngModel)]="model.state" name="state" class="form-control" required/>
+                                    </div>
+                                    <div [hidden]="state.valid || state.pristine" class="text-danger">
+                                        State is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="form-group" [ngClass]="{'has-error': registerForm.submitted && !zip.valid}">
+                                    <label class="control-label" for="zip">Zipcode*</label>
+                                    <div class="input-group">
+                                        <input type="text" #zip="ngModel" [(ngModel)]="model.zip" name="zip" class="form-control" pattern="^[0-9]{5}$" required/>
+                                    </div>
+                                    <div *ngIf="zip.errors">
+                                        <span [hidden]="!zip.errors.pattern || zip.pristine" class="text-danger">Zipcode must be 5 digits.</span>
+                                        <span [hidden]="!zip.errors.required || zip.pristine" class="text-danger">Zipcode No. is required.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row padding-top-10">
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="form-group" [ngClass]="{'has-error': registerForm.submitted && !username.valid}">
+                                    <label class="control-label" for="username">Username*</label>
+                                    <div class="input-group">
+                                        <input type="text" #username="ngModel" [(ngModel)]="model.userName" name="username" class="form-control" required/>
+                                    </div>
+                                </div>
+                                <div [hidden]="username.valid || username.pristine" class="text-danger">
+                                    Username is required.
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="form-group" [ngClass]="{'has-error': registerForm.submitted && !password.valid}">
+                                    <label class="control-label" for="password">Password*</label>
+                                    <div class="input-group">
+                                        <input type="text" #password="ngModel" [(ngModel)]="model.password" name="password" class="form-control" required/>
+                                    </div>
+                                    <div [hidden]="password.valid || password.pristine" class="text-danger">
+                                        Password is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="form-group" [ngClass]="{'has-error': registerForm.submitted && !cpassword.valid}">
+                                    <label class="control-label" for="cpassword">Confirm Password*</label>
+                                    <div class="input-group">
+                                        <input type="text" #cpassword="ngModel" [(ngModel)]="model.cpassword" name="cpassword" class="form-control" required/>
+                                    </div>
+                                    <div [hidden]="cpassword.valid || cpassword.pristine" class="text-danger">
+                                        Confirm Password is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div *ngIf="password.touched && cpassword.touched && password.valid && cpassword.valid" class="col-xs-12">
+                                    <strong class="text-danger" [hidden]="model.password == model.cpassword">
+                             Password and Confirm Password must be the same.
+                        </strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <button type="submit" class="btn btn-primary btn-main" [disabled]="!registerForm.form.valid" [ngClass]="{disabled:!registerForm.form.valid}"
+                                    (click)="onSignup(registerForm.form.valid)">
+                                 SIGN UP
+                            </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
